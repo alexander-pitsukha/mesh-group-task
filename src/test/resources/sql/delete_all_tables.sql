@@ -1,0 +1,12 @@
+delete
+    from
+        profiles;
+delete
+    from
+        phones;
+delete
+    from
+        refresh_tokens;
+delete
+    from
+        users;

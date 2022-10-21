@@ -1,0 +1,7 @@
+{
+  "name": "admin",
+  "password": "$2a$10$aCAex9hLLYY6V4Og.UVHi..jWtwb0oSL.2D/bDUoDGem4aW1VPCi6",
+  "age": 30,
+  "email": "admin@test.com",
+  "role": "ADMIN"
+}
