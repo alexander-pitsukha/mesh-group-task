@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.meshgroup.task.dto.PhoneDto;
 import com.meshgroup.task.dto.UserDto;
 import com.meshgroup.task.service.UserService;
-import com.meshgroup.task.util.WithCustomUserDetails;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
