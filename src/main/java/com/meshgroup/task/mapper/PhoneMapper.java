@@ -5,14 +5,11 @@ import com.meshgroup.task.entity.Phone;
 import com.meshgroup.task.util.Constants;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
 @Mapper(componentModel = Constants.COMPONENT_MODEL)
 public interface PhoneMapper {
-
-    PhoneMapper INSTANCE = Mappers.getMapper(PhoneMapper.class);
 
     @Mapping(target = "userId", source = "user.id")
     PhoneDto toDto(Phone phone);

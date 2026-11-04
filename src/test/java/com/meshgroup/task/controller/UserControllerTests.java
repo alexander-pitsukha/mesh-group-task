@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.meshgroup.task.dto.PhoneDto;
 import com.meshgroup.task.dto.UserDto;
 import com.meshgroup.task.service.UserService;
-import com.meshgroup.task.util.WithCustomUserDetails;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,23 +20,14 @@ import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrlPattern;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserController.class)
 @WithMockUser
@@ -55,7 +45,48 @@ class UserControllerTests extends BasicControllerTests {
     }
 
     @Test
-    void testGetUsers() throws Exception {
+    void testGetUsers1() throws Exception {
+        UserDto userDto = getObjectFromJson("json/user_dto.json", UserDto.class);
+
+        given(userService.getUsers(anyInt(), anyInt(), isNull(), isNull(), isNull()))
+                .willReturn(Collections.singletonList(userDto));
+
+        mockMvc.perform(get("/users")
+                        .param("page", "0")
+                        .param("size", "0")
+                        .headers(httpHeaders())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.*", hasSize(1)))
+                .andExpect(jsonPath("$[0].id", is(userDto.getId().intValue())));
+
+        verify(userService).getUsers(anyInt(), anyInt(), isNull(), isNull(), isNull());
+    }
+
+    @Test
+    void testGetUsers2() throws Exception {
+        UserDto userDto = getObjectFromJson("json/user_dto.json", UserDto.class);
+
+        given(userService.getUsers(anyInt(), anyInt(), isNull(), isNull(), isNull()))
+                .willReturn(Collections.singletonList(userDto));
+
+        mockMvc.perform(get("/users")
+                        .param("page", "1")
+                        .param("size", "1")
+                        .headers(httpHeaders())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.*", hasSize(1)))
+                .andExpect(jsonPath("$[0].id", is(userDto.getId().intValue())));
+
+        verify(userService).getUsers(anyInt(), anyInt(), isNull(), isNull(), isNull());
+    }
+
+
+    @Test
+    void testGetUsers3() throws Exception {
         UserDto userDto = getObjectFromJson("json/user_dto.json", UserDto.class);
 
         given(userService.getUsers(anyInt(), anyInt(), anyString(), anyString(), any()))

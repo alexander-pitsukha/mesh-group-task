@@ -7,13 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
     @Query("select u from User u where u.id = (select p.user.id from Phone p where value = :value)")
-    User findByPhone(@Param("value") String value);
+    Optional<User> findByPhone(@Param("value") String value);
 
     @Query("select u from User u where u.email = :email")
-    User findByEmail(@Param("email") String email);
+    Optional<User> findByEmail(@Param("email") String email);
 
 }

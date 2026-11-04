@@ -14,7 +14,7 @@
     <name>mesh-group-task</name>
     <description>Test for Mesh Group</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <lombok.version>1.18.24</lombok.version>
         <lombok.mapstruct.version>0.2.0</lombok.mapstruct.version>
         <org.mapstruct.version>1.5.2.Final</org.mapstruct.version>

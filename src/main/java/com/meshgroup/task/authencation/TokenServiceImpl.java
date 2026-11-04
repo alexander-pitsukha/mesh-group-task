@@ -1,8 +1,8 @@
 package com.meshgroup.task.authencation;
 
+import com.meshgroup.task.authencation.jwt.JwtTokenUtil;
 import com.meshgroup.task.entity.RefreshToken;
 import com.meshgroup.task.entity.User;
-import com.meshgroup.task.authencation.jwt.JwtTokenUtil;
 import com.meshgroup.task.exception.TokenValidationException;
 import com.meshgroup.task.repository.RefreshTokenRepository;
 import com.meshgroup.task.repository.UserRepository;

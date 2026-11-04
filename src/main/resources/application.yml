@@ -1,0 +1,43 @@
+jwt:
+  expiration:
+    minute:
+      in:
+        ms: 900000
+  refresh:
+    expiration:
+      date:
+        in:
+          ms: 2592000000
+
+logging:
+  file:
+    name: ${logging.file.path}/application.log
+    path: ./logs
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: '@spring.datasource.password@'
+    url: '@spring.datasource.url@'
+    username: '@spring.datasource.username@'
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+        format_sql: false
+        id:
+          new_generator_mappings: false
+    show-sql: true
+  messages:
+    always-use-message-format: false
+    basename: messages/message_en
+    cache-seconds: -1
+    encoding: UTF-8
+    fallback-to-system-locale: true

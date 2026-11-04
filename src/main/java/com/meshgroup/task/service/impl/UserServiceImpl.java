@@ -25,7 +25,6 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static com.meshgroup.task.util.Constants.INVALID_USER_ID;
 
@@ -48,35 +47,35 @@ public class UserServiceImpl implements UserService {
         if (page == 0 && size == 0) {
             if (ObjectUtils.isEmpty(key) || ObjectUtils.isEmpty(operation) || ObjectUtils.isEmpty(value)) {
                 List<User> users = userRepository.findAll();
-                return users.stream().map(userMapper::toDto).collect(Collectors.toList());
+                return users.stream().map(userMapper::toDto).toList();
             } else {
                 UserSpecification specification = new UserSpecification(new SearchCriteria(key, operation, value));
                 List<User> users = userRepository.findAll(Specification.where(specification));
-                return users.stream().map(userMapper::toDto).collect(Collectors.toList());
+                return users.stream().map(userMapper::toDto).toList();
             }
         } else if (ObjectUtils.isEmpty(key) || ObjectUtils.isEmpty(operation) || ObjectUtils.isEmpty(value)) {
             Pageable pageable = PageRequest.of(page, size);
             Page<User> users = userRepository.findAll(pageable);
-            return users.stream().map(userMapper::toDto).collect(Collectors.toList());
+            return users.map(userMapper::toDto).toList();
         } else {
             Pageable pageable = PageRequest.of(page, size);
             UserSpecification specification = new UserSpecification(new SearchCriteria(key, operation, value));
             Page<User> users = userRepository.findAll(Specification.where(specification), pageable);
-            return users.stream().map(userMapper::toDto).collect(Collectors.toList());
+            return users.stream().map(userMapper::toDto).toList();
         }
     }
 
     @Override
     public UserDto getUserByPhone(final String value) {
         log.info("Get user by phone {}", value);
-        var user = userRepository.findByPhone(value);
+        var user = userRepository.findByPhone(value).orElseThrow();
         return userMapper.toDto(user);
     }
 
     @Override
     public UserDto getUserByEmail(final String email) {
         log.info("Get user by email {}", email);
-        var user = userRepository.findByEmail(email);
+        var user = userRepository.findByEmail(email).orElseThrow();
         return userMapper.toDto(user);
     }
 
@@ -122,7 +121,7 @@ public class UserServiceImpl implements UserService {
             phone.setUser(user);
             phone = phoneRepository.save(phone);
             return phone;
-        }).collect(Collectors.toList());
+        }).toList();
         return phoneMapper.toDtos(phones);
     }
 

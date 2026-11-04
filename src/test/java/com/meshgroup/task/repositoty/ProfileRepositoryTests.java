@@ -9,12 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -29,7 +26,7 @@ class ProfileRepositoryTests extends AbstractRepositoryTests {
     }
 
     @Test
-    void testFindByUserId() throws IOException {
+    void testFindByUserId() {
         Profile profile = profileRepository.findByUserId(1L).orElseThrow();
 
         assertNotNull(profile);
@@ -38,7 +35,7 @@ class ProfileRepositoryTests extends AbstractRepositoryTests {
     }
 
     @Test
-    void testExistByUserIdAndProfileId() throws IOException {
+    void testExistByUserIdAndProfileId() {
         Profile profile = profileRepository.findByUserId(1L).orElseThrow();
 
         boolean result = profileRepository.existByUserIdAndProfileId(1L, profile.getId());

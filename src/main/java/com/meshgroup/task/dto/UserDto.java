@@ -6,13 +6,11 @@ import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 public class UserDto extends AbstractLongIdentifiableDto {
 
-    @NotNull
     @NotBlank
     private String name;
 

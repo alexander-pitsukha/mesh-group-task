@@ -20,7 +20,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.meshgroup.task.util.Constants.INVALID_USER_ID;
@@ -58,7 +57,7 @@ public class ProfileServiceImpl implements ProfileService {
             Page<Profile> profiles = profileRepository.findAll(pageable);
             stream = profiles.stream();
         }
-        return stream.map(profileMapper::toDto).collect(Collectors.toList());
+        return stream.map(profileMapper::toDto).toList();
     }
 
     @Override

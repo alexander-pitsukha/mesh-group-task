@@ -24,9 +24,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
         var userDetails = userCache.getUserFromCache(username);
         if (userDetails == null) {
-            userDetails = Optional.ofNullable(username.matches(Constants.PHONE_REGEXP)
-                            ? userRepository.findByPhone(username)
-                            : userRepository.findByEmail(username)).map(UserDetailsImpl::new)
+            userDetails = Optional.of(username.matches(Constants.PHONE_REGEXP)
+                            ? userRepository.findByPhone(username).orElseThrow()
+                            : userRepository.findByEmail(username).orElseThrow()).map(UserDetailsImpl::new)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found."));
             userCache.putUserInCache(userDetails);
         }

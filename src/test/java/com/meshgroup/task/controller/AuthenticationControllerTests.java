@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -23,10 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.verify;
@@ -43,6 +42,9 @@ class AuthenticationControllerTests extends BasicControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    private AuthenticationManager authenticationManager;
 
     @MockBean
     private UserService userService;
@@ -105,6 +107,7 @@ class AuthenticationControllerTests extends BasicControllerTests {
 
         verify(userService).getUserByPhone(anyString());
         verify(userCache).removeUserFromCache(anyString());
+        verify(authenticationManager).authenticate(isA(UsernamePasswordAuthenticationToken.class));
         verify(tokenService).createTokenResponse(anyLong());
     }
 
@@ -131,6 +134,7 @@ class AuthenticationControllerTests extends BasicControllerTests {
 
         verify(userService).getUserByEmail(anyString());
         verify(userCache).removeUserFromCache(anyString());
+        verify(authenticationManager).authenticate(isA(UsernamePasswordAuthenticationToken.class));
         verify(tokenService).createTokenResponse(anyLong());
     }
 

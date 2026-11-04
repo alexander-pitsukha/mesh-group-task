@@ -6,11 +6,11 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.ActiveProfiles;
 
 @Getter
 @Import(TestAppConfiguration.class)
-@TestPropertySource(locations = "classpath:application-test.properties")
+@ActiveProfiles("test")
 public abstract class AbstractTests {
 
     @Autowired

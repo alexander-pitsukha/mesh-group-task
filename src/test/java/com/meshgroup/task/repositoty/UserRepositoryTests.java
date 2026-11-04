@@ -24,7 +24,7 @@ class UserRepositoryTests extends AbstractRepositoryTests {
     void testFindByPhone() throws IOException {
         User user = getObjectFromJson("json/user.json", User.class);
 
-        User entity = userRepository.findByPhone("+375297841841");
+        User entity = userRepository.findByPhone("+375297841841").orElseThrow();
 
         assertEntry(user, entity);
     }
@@ -33,7 +33,7 @@ class UserRepositoryTests extends AbstractRepositoryTests {
     void testFindByByEmail() throws IOException {
         User user = getObjectFromJson("json/user.json", User.class);
 
-        User entity = userRepository.findByEmail(user.getEmail());
+        User entity = userRepository.findByEmail(user.getEmail()).orElseThrow();
 
         assertEntry(user, entity);
     }

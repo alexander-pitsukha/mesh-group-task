@@ -14,15 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.constraints.NotBlank;
@@ -44,8 +36,8 @@ public class UserController {
             @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content)})
     @GetMapping
     public ResponseEntity<List<UserDto>> getUsers(@RequestParam int page, @RequestParam int size,
-                                                  @RequestParam String key, @RequestParam String operation,
-                                                  @RequestParam Object value) {
+                                                  @RequestParam(required = false) String key, @RequestParam(required = false) String operation,
+                                                  @RequestParam(required = false) Object value) {
         return ResponseEntity.ok(userService.getUsers(page, size, key, operation, value));
     }
 
